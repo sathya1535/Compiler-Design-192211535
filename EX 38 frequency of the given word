@@ -1,0 +1,31 @@
+%{
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_WORD_LENGTH 100
+
+int wordCount = 0;
+char targetWord[MAX_WORD_LENGTH];
+%}
+
+%%
+[a-zA-Z]+ {
+    if (strcmp(yytext, targetWord) == 0) {
+        wordCount++;
+    }
+}
+
+.|\n    /* ignore other characters */
+
+%%
+
+int main() {
+    printf("Enter the target word: ");
+    scanf("%s", targetWord);
+
+    yylex();
+
+    printf("Frequency of '%s' in the given sentence: %d\n", targetWord, wordCount);
+
+    return 0;
+}
