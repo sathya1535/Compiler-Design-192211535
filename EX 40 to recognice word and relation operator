@@ -1,0 +1,25 @@
+%{
+#include <stdio.h>
+%}
+
+%%
+
+[ \t\n]  ;   // Ignore whitespace characters
+
+"=="     { printf("Relational Operator: ==\n"); }
+"!="     { printf("Relational Operator: !=\n"); }
+"<="     { printf("Relational Operator: <=\n"); }
+">="     { printf("Relational Operator: >=\n"); }
+"<"      { printf("Relational Operator: <\n"); }
+">"      { printf("Relational Operator: >\n"); }
+
+[a-zA-Z]+   { printf("Word: %s\n", yytext); }
+
+.         { printf("Invalid character: %s\n", yytext); }
+
+%%
+
+int main() {
+    yylex();
+    return 0;
+}
