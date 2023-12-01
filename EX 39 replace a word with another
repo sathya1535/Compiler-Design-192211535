@@ -1,0 +1,32 @@
+%{
+#include <stdio.h>
+#include <string.h>
+%}
+
+%%
+%%
+int main(int argc, char *argv[]) {
+    if (argc != 4) {
+        fprintf(stderr, "Usage: %s <input_file> <old_word> <new_word>\n", argv[0]);
+        return 1;
+    }
+
+    FILE *inputFile = fopen(argv[1], "r");
+    if (inputFile == NULL) {
+        perror("Error opening input file");
+        return 1;
+    }
+
+    char buffer[BUFSIZ];
+    while (fgets(buffer, sizeof(buffer), inputFile) != NULL) {
+        char *pos = strstr(buffer, argv[2]);
+        while (pos != NULL) {
+            strncpy(pos, argv[3], strlen(argv[3]));
+            pos = strstr(pos + strlen(argv[3]), argv[2]);
+        }
+        printf("%s", buffer);
+    }
+
+    fclose(inputFile);
+    return 0;
+}
